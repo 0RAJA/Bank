@@ -10,13 +10,13 @@ link_db:
 migrate_init_db:
 	migrate create -ext sql -dir $(GOPATH)/src/Bank/db/migration -seq init_schema
 migrate_move_db:
-	migrate -path $(GOPATH)/src/Bank/db/migration -database "postgresql://root:secret@localhost:5432/simple_bank?sslmode=disable" --verbose up
+	migrate -path ./db/migration -database "postgresql://root:secret@localhost:5432/simple_bank?sslmode=disable" --verbose up
 migrate_up:
-	migrate -path $(GOPATH)/src/Bank/db/migration -database "postgresql://root:secret@localhost:5432/simple_bank?sslmode=disable" -verbose up
+	migrate -path ./db/migration -database "postgresql://root:secret@localhost:5432/simple_bank?sslmode=disable" -verbose up
 migrate_down:
-	migrate -path $(GOPATH)/src/Bank/db/migration -database "postgresql://root:secret@localhost:5432/simple_bank?sslmode=disable" -verbose down
+	migrate -path ./db/migration -database "postgresql://root:secret@localhost:5432/simple_bank?sslmode=disable" -verbose down
 migrate_version:
-	migrate -path $(GOPATH)/src/Bank/db/migration -database "postgresql://root:secret@localhost:5432/simple_bank?sslmode=disable" version
+	migrate -path ./db/migration -database "postgresql://root:secret@localhost:5432/simple_bank?sslmode=disable" version
 sqlc:
 	sqlc generate
 test:
