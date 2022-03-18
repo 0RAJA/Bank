@@ -1,0 +1,38 @@
+{"level":"INFO","ts":"2022-03-18T10:25:20.072+0800","caller":"api/account.go:48","msg":"BindAndValid err: [Key: 'getAccountParams.ID' Error:Field validation for 'ID' failed on the 'required' tag]"}
+{"level":"INFO","ts":"2022-03-18T10:25:56.317+0800","caller":"api/account.go:48","msg":"BindAndValid err: [Key: 'getAccountParams.ID' Error:Field validation for 'ID' failed on the 'required' tag]"}
+{"level":"INFO","ts":"2022-03-18T10:26:33.859+0800","caller":"api/account.go:48","msg":"BindAndValid err: [Key: 'getAccountParams.ID' Error:Field validation for 'ID' failed on the 'required' tag]"}
+{"level":"INFO","ts":"2022-03-18T10:26:45.020+0800","caller":"api/account.go:48","msg":"BindAndValid err: [Key: 'getAccountParams.ID' Error:Field validation for 'ID' failed on the 'required' tag]"}
+{"level":"INFO","ts":"2022-03-18T10:27:26.295+0800","caller":"api/account.go:50","msg":"BindAndValid err: [Key: 'getAccountParams.ID' Error:Field validation for 'ID' failed on the 'required' tag]"}
+{"level":"INFO","ts":"2022-03-18T10:28:07.198+0800","caller":"api/account.go:56","msg":"sql: no rows in result set"}
+{"level":"INFO","ts":"2022-03-18T10:57:23.391+0800","caller":"api/transfer.go:49","msg":"BindAndValid err: []"}
+{"level":"INFO","ts":"2022-03-18T11:00:12.970+0800","caller":"api/transfer.go:51","msg":"BindAndValid err: []"}
+{"level":"INFO","ts":"2022-03-18T11:00:52.515+0800","caller":"api/transfer.go:51","msg":"BindAndValid err: []"}
+{"level":"INFO","ts":"2022-03-18T11:01:10.591+0800","caller":"api/transfer.go:51","msg":"BindAndValid err: []"}
+{"level":"INFO","ts":"2022-03-18T11:01:43.615+0800","caller":"api/transfer.go:52","msg":"BindAndValid err: []"}
+{"level":"INFO","ts":"2022-03-18T11:02:40.717+0800","caller":"api/transfer.go:51","msg":"BindAndValid err: []"}
+{"level":"INFO","ts":"2022-03-18T11:04:37.931+0800","caller":"api/transfer.go:31","msg":"错误码：10000010, 错误信息: 数据异常"}
+{"level":"INFO","ts":"2022-03-18T11:35:56.783+0800","caller":"api/transfer.go:30","msg":"错误码：10000010, 错误信息: 数据异常"}
+{"level":"INFO","ts":"2022-03-18T11:38:14.069+0800","caller":"api/transfer.go:30","msg":"错误码：10000010, 错误信息: 数据异常"}
+{"level":"INFO","ts":"2022-03-18T11:38:54.753+0800","caller":"api/transfer.go:49","msg":"BindAndValid err: [Key: 'createTransferRequest.Currency' Error:Field validation for 'Currency' failed on the 'currency' tag]"}
+{"level":"INFO","ts":"2022-03-18T13:08:38.422+0800","caller":"api/account.go:35","msg":"pq: insert or update on table \"accounts\" violates foreign key constraint \"accounts_owner_fkey\""}
+{"level":"INFO","ts":"2022-03-18T13:13:13.591+0800","caller":"api/account.go:36","msg":"pq: insert or update on table \"accounts\" violates foreign key constraint \"accounts_owner_fkey\""}
+{"level":"INFO","ts":"2022-03-18T13:13:31.411+0800","caller":"api/account.go:36","msg":"pq: insert or update on table \"accounts\" violates foreign key constraint \"accounts_owner_fkey\""}
+{"level":"INFO","ts":"2022-03-18T13:32:40.474+0800","caller":"api/account.go:36","msg":"pq: insert or update on table \"accounts\" violates foreign key constraint \"accounts_owner_fkey\""}
+{"level":"INFO","ts":"2022-03-18T13:36:23.240+0800","caller":"api/account.go:36","msg":"pq: insert or update on table \"accounts\" violates foreign key constraint \"accounts_owner_fkey\""}
+{"level":"INFO","ts":"2022-03-18T13:36:48.121+0800","caller":"api/account.go:26","msg":"BindAndValid err: [Key: 'createAccountRequest.Owner' Error:Field validation for 'Owner' failed on the 'lte' tag]"}
+{"level":"INFO","ts":"2022-03-18T13:46:01.191+0800","caller":"api/transfer.go:124","msg":"错误码：10000001, 错误信息: 入参错误"}
+{"level":"INFO","ts":"2022-03-18T13:47:22.477+0800","caller":"api/transfer.go:124","msg":"错误码：10000001, 错误信息: 入参错误"}
+{"level":"INFO","ts":"2022-03-18T13:48:34.032+0800","caller":"api/transfer.go:124","msg":"错误码：10000001, 错误信息: 入参错误"}
+{"level":"INFO","ts":"2022-03-18T13:49:13.198+0800","caller":"api/transfer.go:124","msg":"错误码：10000001, 错误信息: 入参错误"}
+{"level":"INFO","ts":"2022-03-18T13:49:21.488+0800","caller":"api/transfer.go:124","msg":"错误码：10000001, 错误信息: 入参错误"}
+{"level":"INFO","ts":"2022-03-18T13:54:36.587+0800","caller":"api/transfer.go:94","msg":"错误码：10000001, 错误信息: 入参错误"}
+{"level":"INFO","ts":"2022-03-18T13:54:40.811+0800","caller":"api/transfer.go:100","msg":"sql: no rows in result set"}
+{"level":"INFO","ts":"2022-03-18T14:34:36.289+0800","caller":"api/user.go:45","msg":"pq: duplicate key value violates unique constraint \"users_pkey\""}
+{"level":"INFO","ts":"2022-03-18T14:35:04.971+0800","caller":"api/user.go:26","msg":"BindAndValid err: [Key: 'createUserRequest.Email' Error:Field validation for 'Email' failed on the 'email' tag]"}
+{"level":"INFO","ts":"2022-03-18T14:40:27.064+0800","caller":"api/user.go:54","msg":"pq: duplicate key value violates unique constraint \"users_pkey\""}
+{"level":"INFO","ts":"2022-03-18T16:57:54.195+0800","caller":"api/user.go:86","msg":"BindAndValid err: [Key: 'getUserRequest.Username' Error:Field validation for 'Username' failed on the 'required' tag]"}
+{"level":"INFO","ts":"2022-03-18T16:58:10.572+0800","caller":"api/user.go:86","msg":"BindAndValid err: [Key: 'getUserRequest.Username' Error:Field validation for 'Username' failed on the 'required' tag]"}
+{"level":"INFO","ts":"2022-03-18T16:58:20.204+0800","caller":"api/user.go:86","msg":"BindAndValid err: [Key: 'getUserRequest.Username' Error:Field validation for 'Username' failed on the 'required' tag]"}
+{"level":"INFO","ts":"2022-03-18T16:58:39.631+0800","caller":"api/user.go:86","msg":"BindAndValid err: [Key: 'getUserRequest.Username' Error:Field validation for 'Username' failed on the 'required' tag]"}
+{"level":"INFO","ts":"2022-03-18T21:48:30.892+0800","caller":"api/user.go:66","msg":"pq: duplicate key value violates unique constraint \"users_email_key\""}
+{"level":"INFO","ts":"2022-03-18T21:48:53.987+0800","caller":"api/user.go:66","msg":"pq: duplicate key value violates unique constraint \"users_pkey\""}

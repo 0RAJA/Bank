@@ -35,14 +35,22 @@ func (q *Queries) CreateTransfer(ctx context.Context, arg CreateTransferParams) 
 }
 
 const getTransfer = `-- name: GetTransfer :one
-SELECT id, from_account_id, to_account_id, amount, created_at
-FROM transfers
-WHERE id = $1
+SELECT t.id, t.from_account_id, t.to_account_id, t.amount, t.created_at
+FROM transfers t,
+     accounts a
+WHERE t.id = $1
+  and ((a.owner = $2::text and t.from_account_id = a.id)
+    or (a.owner = $2::text and t.to_account_id = a.id))
 LIMIT 1
 `
 
-func (q *Queries) GetTransfer(ctx context.Context, id int64) (Transfer, error) {
-	row := q.db.QueryRowContext(ctx, getTransfer, id)
+type GetTransferParams struct {
+	ID       int64  `json:"id"`
+	Username string `json:"username"`
+}
+
+func (q *Queries) GetTransfer(ctx context.Context, arg GetTransferParams) (Transfer, error) {
+	row := q.db.QueryRowContext(ctx, getTransfer, arg.ID, arg.Username)
 	var i Transfer
 	err := row.Scan(
 		&i.ID,
@@ -55,19 +63,23 @@ func (q *Queries) GetTransfer(ctx context.Context, id int64) (Transfer, error) {
 }
 
 const listTransfers = `-- name: ListTransfers :many
-SELECT id, from_account_id, to_account_id, amount, created_at
-FROM transfers
-WHERE from_account_id = $1
-   OR to_account_id = $2
+SELECT t.id, t.from_account_id, t.to_account_id, t.amount, t.created_at
+FROM transfers t,
+     accounts a
+WHERE (from_account_id = $1
+    OR to_account_id = $2)
+  and ((a.owner = $5::text and t.from_account_id = a.id)
+    or (a.owner = $5::text and t.to_account_id = a.id))
 ORDER BY id
 LIMIT $3 OFFSET $4
 `
 
 type ListTransfersParams struct {
-	FromAccountID int64 `json:"from_account_id"`
-	ToAccountID   int64 `json:"to_account_id"`
-	Limit         int32 `json:"limit"`
-	Offset        int32 `json:"offset"`
+	FromAccountID int64  `json:"from_account_id"`
+	ToAccountID   int64  `json:"to_account_id"`
+	Limit         int32  `json:"limit"`
+	Offset        int32  `json:"offset"`
+	Username      string `json:"username"`
 }
 
 func (q *Queries) ListTransfers(ctx context.Context, arg ListTransfersParams) ([]Transfer, error) {
@@ -76,12 +88,13 @@ func (q *Queries) ListTransfers(ctx context.Context, arg ListTransfersParams) ([
 		arg.ToAccountID,
 		arg.Limit,
 		arg.Offset,
+		arg.Username,
 	)
 	if err != nil {
 		return nil, err
 	}
 	defer rows.Close()
-	var items []Transfer
+	items := []Transfer{}
 	for rows.Next() {
 		var i Transfer
 		if err := rows.Scan(
