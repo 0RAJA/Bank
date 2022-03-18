@@ -27,12 +27,12 @@ Postgres:
 Email:
   Host: smtp.qq.com
   Port: 465
-  UserName: 1647193241@qq.com
-  Password: hrefwwxzvxgbehfc
+  UserName:
+  Password:
   IsSSL: true
-  From: 1647193241@qq.com
+  From:
   To:
-    - 1647193241@qq.com
+    -
 Pagelines:
   DefaultPage: 1
   DefaultPageSize: 10
