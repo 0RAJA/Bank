@@ -10,9 +10,13 @@ func TestStore_TransferTx(t *testing.T) {
 	store := NewStore(testDB)
 	accout1 := testCreateAccount(t)
 	accout2 := testCreateAccount(t)
+	type AT struct {
+		Account
+		TransferTxResult
+	}
 	amout := int64(100)
 	errorChan := make(chan error)
-	resultChan := make(chan TransferTxRequest)
+	resultChan := make(chan AT)
 	var n = 10
 	for i := 0; i < n; i++ {
 		go func() {
@@ -23,7 +27,10 @@ func TestStore_TransferTx(t *testing.T) {
 			}
 			result, err := store.TransferTx(context.Background(), arg)
 			errorChan <- err
-			resultChan <- result
+			resultChan <- AT{
+				Account:          accout1,
+				TransferTxResult: result,
+			}
 		}()
 	}
 	for i := 0; i < n; i++ {
@@ -39,7 +46,11 @@ func TestStore_TransferTx(t *testing.T) {
 		require.NotZero(t, result.Transfer.ID)
 		require.NotZero(t, result.Transfer.CreatedAt)
 
-		_, err = store.GetTransfer(context.Background(), result.Transfer.ID)
+		arg := GetTransferParams{
+			ID:       result.Transfer.ID,
+			Username: result.Owner,
+		}
+		_, err = store.GetTransfer(context.Background(), arg)
 		require.NoError(t, err)
 		//check fromEntity
 		fromEntity := result.FromEntry

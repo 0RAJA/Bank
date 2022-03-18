@@ -1,0 +1,45 @@
+Server:
+  RunMode: debug
+  Address: 127.0.0.1:8080
+  ReadTimeout: 5s
+  WriteTimeout: 5s
+  DefaultContextTimeout: 30s #默认超时时间
+App:
+  Name: Bank
+  Version: 1.0.0
+Log:
+  Level: release
+  LogSavePath: ./storage/logs/ # 日志保存路径
+  HighLevelFile: error          # 高级别日志文件名
+  LowLevelFile: info          # 低级别文件名
+  LogFileExt: .log          # 日志文件后缀
+  MaxSize: 200
+  MaxAge: 30
+  MaxBackups: 7
+  Compress: false
+Postgres:
+  DBDriver: postgres
+  UserName: root
+  Password: secret
+  Address: localhost:5432
+  DBName: simple_bank
+  Sslmode: disable
+Email:
+  Host: smtp.qq.com
+  Port: 465
+  UserName:
+  Password:
+  IsSSL: true
+  From:
+  To:
+    -
+Pagelines:
+  DefaultPage: 1
+  DefaultPageSize: 10
+  PageKey: page
+  PageSizeKey: page_size
+Token:
+  Key: 12345678123456781234567812345678
+  Duration: 15m
+  AuthorizationKey: Authorization # 授权头密钥
+  AuthorizationType: bearer # 承载前缀

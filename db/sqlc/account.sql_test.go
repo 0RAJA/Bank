@@ -10,10 +10,11 @@ import (
 )
 
 func TestQueries_CreateAccount(t *testing.T) {
+	user := testCreateUser(t)
 	arg := CreateAccountParams{
-		Owner:    util.RandomOwner(),
+		Owner:    user.Username,
 		Balance:  util.RandomMoney(),
-		Currency: util.RandomCurrency(),
+		Currency: "RMB",
 	}
 	account, err := testQueries.CreateAccount(context.Background(), arg)
 	require.NoError(t, err)
@@ -28,10 +29,11 @@ func TestQueries_CreateAccount(t *testing.T) {
 }
 
 func testCreateAccount(t *testing.T) Account {
+	user := testCreateUser(t)
 	arg := CreateAccountParams{
-		Owner:    util.RandomOwner(),
+		Owner:    user.Username,
 		Balance:  util.RandomMoney(),
-		Currency: util.RandomCurrency(),
+		Currency: "RMB",
 	}
 	account, err := testQueries.CreateAccount(context.Background(), arg)
 	require.NoError(t, err)
@@ -82,17 +84,17 @@ func TestDeleteAccount(t *testing.T) {
 	require.Empty(t, account2)
 }
 
-func TestQueries_ListTransfers(t *testing.T) {
-	for i := 0; i < 10; i++ {
-		testCreateAccount(t)
-	}
+func TestAccounts(t *testing.T) {
+	var account Account
+	account = testCreateAccount(t)
 	arg := ListAccountsParams{
-		Limit:  5,
-		Offset: 5,
+		Owner:  account.Owner,
+		Limit:  1,
+		Offset: 0,
 	}
 	accounts, err := testQueries.ListAccounts(context.Background(), arg)
 	require.NoError(t, err)
-	require.Len(t, accounts, 5)
+	require.Len(t, accounts, 1)
 	for _, account := range accounts {
 		require.NotZero(t, account)
 	}

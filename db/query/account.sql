@@ -8,13 +8,14 @@ SELECT *
 FROM accounts
 WHERE id = $1
 LIMIT 1 for no key update;
---不会更改就爱你支队
+--不会更改id
 
 -- name: ListAccounts :many
 SELECT *
 FROM accounts
+where owner = $1
 ORDER BY ID
-LIMIT $1 OFFSET $2;
+LIMIT $2 OFFSET $3;
 
 -- name: UpdateAccount :one
 UPDATE accounts

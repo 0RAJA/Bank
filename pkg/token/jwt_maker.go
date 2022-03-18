@@ -1,0 +1,64 @@
+package token
+
+import (
+	"errors"
+	"github.com/0RAJA/Bank/pkg/app/errcode"
+	"github.com/dgrijalva/jwt-go"
+	"time"
+)
+
+var ErrSecretLen = errors.New("密钥长度不正确")
+
+const minSecretKeySize = 32
+
+// JWTMaker is a JSON Web Token maker
+type JWTMaker struct {
+	secretKey string
+}
+
+// NewJWTMaker creates a new JWTMaker
+func NewJWTMaker(secretKey string) (Maker, error) {
+	if len(secretKey) < minSecretKeySize {
+		return nil, ErrSecretLen
+	}
+	return &JWTMaker{secretKey}, nil
+}
+
+// CreateToken creates a new token for a specific username and duration
+func (maker *JWTMaker) CreateToken(username string, duration time.Duration) (string, error) {
+	payload, err := NewPayload(username, duration)
+	if err != nil {
+		return "", err
+	}
+
+	jwtToken := jwt.NewWithClaims(jwt.SigningMethodHS256, payload)
+	token, err := jwtToken.SignedString([]byte(maker.secretKey))
+	return token, err
+}
+
+// VerifyToken checks if the token is valid or not
+func (maker *JWTMaker) VerifyToken(token string) (*Payload, error) {
+	keyFunc := func(token *jwt.Token) (interface{}, error) {
+		_, ok := token.Method.(*jwt.SigningMethodHMAC)
+		if !ok {
+			return nil, errcode.UnauthorizedTokenTimeoutErr
+		}
+		return []byte(maker.secretKey), nil
+	}
+
+	jwtToken, err := jwt.ParseWithClaims(token, &Payload{}, keyFunc)
+	if err != nil {
+		verr, ok := err.(*jwt.ValidationError)
+		if ok && errors.Is(verr.Inner, errcode.UnauthorizedTokenTimeoutErr) {
+			return nil, errcode.UnauthorizedTokenTimeoutErr
+		}
+		return nil, errcode.UnauthorizedTokenTimeoutErr
+	}
+
+	payload, ok := jwtToken.Claims.(*Payload)
+	if !ok {
+		return nil, errcode.UnauthorizedTokenTimeoutErr
+	}
+
+	return payload, nil
+}

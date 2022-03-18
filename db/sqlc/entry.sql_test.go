@@ -9,8 +9,9 @@ import (
 )
 
 func TestQueries_CreateEntry(t *testing.T) {
+	account := testCreateAccount(t)
 	arg := CreateEntryParams{
-		AccountID: util.RandomInt(3, 10),
+		AccountID: account.ID,
 		Amount:    util.RandomInt(0, 1000),
 	}
 	entry, err := testQueries.CreateEntry(context.Background(), arg)
@@ -54,8 +55,9 @@ func TestQueries_ListEntries(t *testing.T) {
 	for i := 0; i < 10; i++ {
 		testCreateEntry(t)
 	}
+	account := testCreateAccount(t)
 	arg := ListEntriesParams{
-		AccountID: util.RandomInt(3, 30),
+		AccountID: account.ID,
 		Limit:     5,
 		Offset:    5,
 	}

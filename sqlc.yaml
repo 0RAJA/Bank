@@ -6,3 +6,5 @@ packages:
     schema: "./db/migration"
     queries: "./db/query/"
     emit_json_tags: true #将json放到标签
+    emit_empty_slices: true #查不到值返回空切片
+    emit_interface: true #生成包含查询结构所有功能的接口

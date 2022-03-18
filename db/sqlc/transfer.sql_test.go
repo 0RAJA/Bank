@@ -24,7 +24,7 @@ func TestQueries_CreateTransfer(t *testing.T) {
 	require.Equal(t, transfer.Amount, arg.Amount)
 }
 
-func testCreateTransfer(t *testing.T) Transfer {
+func testCreateTransfer(t *testing.T) (Account, Account, Transfer) {
 	account1 := testCreateAccount(t)
 	account2 := testCreateAccount(t)
 	arg := CreateTransferParams{
@@ -38,12 +38,15 @@ func testCreateTransfer(t *testing.T) Transfer {
 	require.Equal(t, transfer.FromAccountID, account1.ID)
 	require.Equal(t, transfer.ToAccountID, account2.ID)
 	require.Equal(t, transfer.Amount, arg.Amount)
-	return transfer
+	return account1, account2, transfer
 }
 
 func TestQueries_GetTransfer(t *testing.T) {
-	transfer := testCreateTransfer(t)
-	transfer2, err := testQueries.GetTransfer(context.Background(), transfer.ID)
+	account1, _, transfer := testCreateTransfer(t)
+	transfer2, err := testQueries.GetTransfer(context.Background(), GetTransferParams{
+		ID:       transfer.ID,
+		Username: account1.Owner,
+	})
 	require.NoError(t, err)
 	require.NotZero(t, transfer2)
 	require.Equal(t, transfer, transfer2)

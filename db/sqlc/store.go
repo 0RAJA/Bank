@@ -13,22 +13,27 @@ import (
 	I:隔离性:并发事务不应该相互影响
 	D:持久性:即使出现异常也应该持久化
 */
+//数据库操作虚拟接口
+type Store interface {
+	Querier
+	TransferTx(ctx context.Context, arg TransferTxParams) (TransferTxResult, error)
+}
 
-type Store struct {
+type SqlStore struct {
 	*Queries
 	db *sql.DB
 }
 
 // NewStore 返回一个查询对象
-func NewStore(db *sql.DB) *Store {
-	return &Store{
+func NewStore(db *sql.DB) *SqlStore {
+	return &SqlStore{
 		Queries: New(db),
 		db:      db,
 	}
 }
 
 //通过事务执行回调函数
-func (store *Store) execTx(ctx context.Context, fn func(queries *Queries) error) error {
+func (store *SqlStore) execTx(ctx context.Context, fn func(queries *Queries) error) error {
 	tx, err := store.db.BeginTx(ctx, nil) //开启事务
 	if err != nil {
 		return err
@@ -49,7 +54,7 @@ type TransferTxParams struct {
 	Amount        int64 `json:"amount,omitempty"`
 }
 
-type TransferTxRequest struct {
+type TransferTxResult struct {
 	Transfer    Transfer `json:"transfer"`     // 交易记录
 	FromAccount Account  `json:"from_account"` //源账户
 	ToAccount   Account  `json:"to_account"`   //目标账户
@@ -58,8 +63,8 @@ type TransferTxRequest struct {
 }
 
 // TransferTx 通过事务进行交易执行
-func (store *Store) TransferTx(ctx context.Context, arg TransferTxParams) (TransferTxRequest, error) {
-	var result TransferTxRequest
+func (store *SqlStore) TransferTx(ctx context.Context, arg TransferTxParams) (TransferTxResult, error) {
+	var result TransferTxResult
 	err := store.execTx(ctx, func(queries *Queries) error {
 		var err error
 		//创建一个转移记录
