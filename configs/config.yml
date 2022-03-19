@@ -1,6 +1,6 @@
 Server:
-  RunMode: debug
-  Address: 127.0.0.1:8080
+  RunMode: release
+  Address: :8080
   ReadTimeout: 5s
   WriteTimeout: 5s
   DefaultContextTimeout: 30s #默认超时时间
@@ -21,7 +21,7 @@ Postgres:
   DBDriver: postgres
   UserName: root
   Password: secret
-  Address: localhost:5432
+  Address: postgres12:5432
   DBName: simple_bank
   Sslmode: disable
 Email:

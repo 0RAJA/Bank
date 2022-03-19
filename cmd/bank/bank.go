@@ -11,6 +11,7 @@ import (
 	"github.com/0RAJA/Bank/pkg/logger"
 	"github.com/0RAJA/Bank/pkg/setting"
 	"github.com/0RAJA/Bank/settings"
+	"github.com/gin-gonic/gin"
 	_ "github.com/lib/pq"
 	"log"
 	"net/http"
@@ -32,10 +33,23 @@ func main() {
 		log.Fatalln(err)
 	}
 	store := db.NewStore(conn)
+	gin.SetMode(settings.ServerSetting.RunMode)
 	server := api.NewServer(store)
-	if err = server.Start(settings.ServerSetting.Address); err != nil {
-		settings.Logger.Fatal("server.Start Err:" + err.Error())
+	s := &http.Server{
+		Addr:           settings.ServerSetting.Address,
+		Handler:        server.Router,
+		ReadTimeout:    settings.ServerSetting.ReadTimeout,
+		WriteTimeout:   settings.ServerSetting.WriteTimeout,
+		MaxHeaderBytes: 1 << 20,
 	}
+	go func() {
+		err := s.ListenAndServe()
+		if err != nil {
+			fmt.Println(err)
+		}
+	}()
+	gracefulExit(s) //优雅退出
+	settings.Logger.Info("OVER")
 }
 func init() {
 	if err := SetupSetting(); err != nil { //加载配置文件

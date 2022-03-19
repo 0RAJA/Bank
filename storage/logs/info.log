@@ -36,3 +36,16 @@
 {"level":"INFO","ts":"2022-03-18T16:58:39.631+0800","caller":"api/user.go:86","msg":"BindAndValid err: [Key: 'getUserRequest.Username' Error:Field validation for 'Username' failed on the 'required' tag]"}
 {"level":"INFO","ts":"2022-03-18T21:48:30.892+0800","caller":"api/user.go:66","msg":"pq: duplicate key value violates unique constraint \"users_email_key\""}
 {"level":"INFO","ts":"2022-03-18T21:48:53.987+0800","caller":"api/user.go:66","msg":"pq: duplicate key value violates unique constraint \"users_pkey\""}
+{"level":"INFO","ts":"2022-03-18T22:54:51.427+0800","caller":"bank/bank.go:96","msg":"ShutDown Server..."}
+{"level":"INFO","ts":"2022-03-18T22:54:51.428+0800","caller":"bank/bank.go:50","msg":"OVER"}
+{"level":"INFO","ts":"2022-03-18T22:58:07.233+0800","caller":"bank/bank.go:98","msg":"ShutDown Server..."}
+{"level":"INFO","ts":"2022-03-18T22:58:07.234+0800","caller":"bank/bank.go:52","msg":"OVER"}
+{"level":"INFO","ts":"2022-03-19T10:18:49.820+0800","caller":"bank/bank.go:98","msg":"ShutDown Server..."}
+{"level":"INFO","ts":"2022-03-19T10:18:49.820+0800","caller":"bank/bank.go:52","msg":"OVER"}
+{"level":"INFO","ts":"2022-03-19T10:52:39.961+0800","caller":"api/user.go:130","msg":"BindAndValid err: [Key: 'loginsRequest.Username' Error:Field validation for 'Username' failed on the 'required' tag]"}
+{"level":"INFO","ts":"2022-03-19T10:52:50.952+0800","caller":"bank/bank.go:98","msg":"ShutDown Server..."}
+{"level":"INFO","ts":"2022-03-19T10:52:50.954+0800","caller":"bank/bank.go:52","msg":"OVER"}
+{"level":"INFO","ts":"2022-03-19T10:59:02.983+0800","caller":"api/user.go:130","msg":"BindAndValid err: [Key: 'loginsRequest.Username' Error:Field validation for 'Username' failed on the 'required' tag]"}
+{"level":"INFO","ts":"2022-03-19T10:59:12.400+0800","caller":"api/user.go:130","msg":"BindAndValid err: [Key: 'loginsRequest.Username' Error:Field validation for 'Username' failed on the 'required' tag]"}
+{"level":"INFO","ts":"2022-03-19T10:59:17.714+0800","caller":"bank/bank.go:98","msg":"ShutDown Server..."}
+{"level":"INFO","ts":"2022-03-19T10:59:17.715+0800","caller":"bank/bank.go:52","msg":"OVER"}
