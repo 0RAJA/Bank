@@ -1,0 +1,24 @@
+name: Deploy to production
+
+on: # 触发此工作流的事件 部署只需要主分支有push时触发
+  push:
+    branches: [ master ]
+
+jobs:
+  test:
+    name: Build image
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: aliyun/acr-login@v1
+        with:
+          region-id: cn-hangzhou # example: cn-hangzhou
+          access-key-id: "${{ secrets.ACCESS_KEY_ID }}"
+          access-key-secret: "${{ secrets.ACCESS_KEY_SECRET }}"
+      - name: Build and push image
+        env:
+          REGISTRY:
+          IMAGE_TAG: ${{ github.sha }}
+        run: |
+          docker build -t registry.cn-hangzhou.aliyuncs.com/1647193241aliyun/bank:$IMAGE_TAG .
+          docker push registry.cn-hangzhou.aliyuncs.com/1647193241aliyun/bank:$IMAGE_TAG
