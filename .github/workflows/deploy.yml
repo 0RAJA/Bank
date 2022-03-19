@@ -13,12 +13,12 @@ jobs:
       - name: check out code into the go module directory
         uses: actions/checkout@v2
 
-      - name: aliyun acr login
+      - name: Login to ACR
         uses: aliyun/acr-login@v1
         with:
-          region-id: cn-hangzhou # example: cn-hangzhou
-          access-key-id: ${{ secrets.ACCESS_KEY_ID }}
-          access-key-secret: ${{ secrets.ACCESS_KEY_SECRET }}
+          login-server: https://registry.cn-hangzhou.aliyuncs.com
+          username: "${{ secrets.REGISTRY_USERNAME }}"
+          password: "${{ secrets.REGISTRY_PASSWORD }}"
       - name: Build and push image
         env:
           REGISTRY:
