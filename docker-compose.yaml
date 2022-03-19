@@ -2,13 +2,20 @@ version: "3.8"
 services:
   postgres:
     image: postgres:12
+    container_name: postgres12
     environment:
       - POSTGRES_PASSWORD=secret
-        POSTGRES_USER=root
-        POSTGRES_DB=simple_bank
+      - POSTGRES_USER=root
+      - POSTGRES_DB=bank
+    ports:
+      - "5432:5432"
   api:
     build:
       context: .
       dockerfile: Dockerfile
     ports:
       - "8080:8080"
+    depends_on:
+      - postgres
+    entrypoint: [ "/app/wait-for.sh","postgres12:5432","--","/app/start.sh" ] #入口函数，会覆盖dockerfile里的cmd
+    command: [ "/app/main" ]

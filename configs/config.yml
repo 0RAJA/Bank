@@ -22,7 +22,7 @@ Postgres:
   UserName: root
   Password: secret
   Address: postgres12:5432
-  DBName: simple_bank
+  DBName: bank
   Sslmode: disable
 Email:
   Host: smtp.qq.com
