@@ -1,6 +1,6 @@
 .PHONY: postgres create_db drop_db migrate_up migrate_down migrate_up1 migrate_down1 sqlc test server mock_install mock_init
 postgres:
-	docker run --name postgres12 -p 5432:5432 -e POSTGRES_USER=root -e POSTGRES_PASSWORD=secret -d postgres:12-alpine
+	docker run --name postgres12 --network bank -p 5432:5432 -e POSTGRES_USER=root -e POSTGRES_PASSWORD=secret -d postgres:12-alpine
 create_db:
 	docker exec -it postgres12 createdb --username=root --owner=root simple_bank
 drop_db:
@@ -33,3 +33,5 @@ mock_init:
 	mockgen -packge mockdb -destination db/mock/store.go github.com/0RAJA/Bank/db/sqlc Store
 server:
 	go run cmd/bank/bank.go
+build:
+	go build -o /cmd/bank/main /cmd/bank/bank.go

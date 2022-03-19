@@ -14,7 +14,7 @@ import "github.com/gin-gonic/gin"
 
 type Server struct {
 	store      db.Store       //提供数据库交互
-	router     *gin.Engine    //提供路由，处理API请求
+	Router     *gin.Engine    //提供路由，处理API请求
 	serverConf configs.Server //
 	maker      token.Maker
 }
@@ -43,12 +43,12 @@ func NewServer(store *db.SqlStore) *Server {
 	}
 	router.POST("/create_user", server.createUser)
 	router.POST("/login", server.LoginUser)
-	server.router = router
+	server.Router = router
 	return server
 }
 
 func (s *Server) Start(address string) error {
-	if err := s.router.Run(address); err != nil {
+	if err := s.Router.Run(address); err != nil {
 		return err
 	}
 	return nil
