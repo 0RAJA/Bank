@@ -10,7 +10,11 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: aliyun/acr-login@v1
+      - name: check out code into the go module directory
+        uses: actions/checkout@v2
+
+      - name: aliyun acr login
+        uses: aliyun/acr-login@v1
         with:
           region-id: cn-hangzhou # example: cn-hangzhou
           access-key-id: ${{ secrets.ACCESS_KEY_ID }}
